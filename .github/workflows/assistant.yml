@@ -16,8 +16,7 @@ jobs:
         fetch-depth: 0
 
     - name: Generate random number and save to file
-      run: |
-        echo date >> log.txt
+      run: echo "$(date) and $RANDOM" >> log.txt
 
     - name: Debug log.txt
       run: cat log.txt
