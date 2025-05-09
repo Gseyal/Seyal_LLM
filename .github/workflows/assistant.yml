@@ -26,7 +26,7 @@ jobs:
 
     - name: Commit and push the file
       env:
-        TOKEN: ${{ secrets.chabi }}
+        TOKEN: ${{ secrets.CHABI }}
       run: |
         git config --global user.name "Gseyal"
         git config --global user.email "gautamseyal2020@gmail.com"
