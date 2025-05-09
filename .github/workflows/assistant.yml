@@ -19,11 +19,13 @@ jobs:
         echo '$Date $RANDOM' > log.txt
         
     - name: Commit and push to the repository
+      env:
+        TOKEN: ${{ secrets.chabi}} 
       run: |
         git config --global user.name "Gseyal"
         git config --global user.email "gautamseyal2020@gmail.com"
         
         git add log.txt
-        git commit -m "Add random number: $RANDOM_NUMBER"
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
         git push origin main
 
