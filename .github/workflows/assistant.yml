@@ -1,31 +1,34 @@
 name: Generate Random Number and Commit
 
 on:
+  workflow_dispatch: # Manual run button
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch: 
+    - cron: '0 0 * * *' # Every 10 minutes (adjust as needed)
 
 jobs:
   generate-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout the repository
       uses: actions/checkout@v2
 
-    - name: log and save to file
+    - name: Generate random number and save to file
       run: |
-    
-        echo '$Date $RANDOM' > log.txt
-        
-    - name: Commit and push to the repository
+        RANDOM_NUMBER=$((RANDOM))
+        echo "Generated random number: $RANDOM_NUMBER"
+        echo "$RANDOM_NUMBER" > log.txt
+
+    - name: Commit and push the file
       env:
-        TOKEN: ${{ secrets.chabi}} 
+        TOKEN: ${{ secrets.chabi }}
       run: |
         git config --global user.name "Gseyal"
         git config --global user.email "gautamseyal2020@gmail.com"
-        
-        git add log.txt
-        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
-        git push origin main
 
+        git add log.txt
+        git commit -m "Add random number: $(cat random_number.txt)" || echo "Nothing to commit"
+
+        # Authenticate using fine-grained PAT
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
+        git push origin HEAD
