@@ -1,9 +1,9 @@
-name: Generate Random Number and Commit
+name: Repo Assistant
 
 on:
   workflow_dispatch: # Manual run
   schedule:
-    - cron: '*/10 * * * *' # Every 10 minutes
+    - cron: '0 * * * *' # Every 10 minutes
 
 jobs:
   generate-and-commit:
@@ -17,9 +17,7 @@ jobs:
 
     - name: Generate random number and save to file
       run: |
-        RANDOM_NUMBER=$((RANDOM))
-        echo "Generated random number: $RANDOM_NUMBER"
-        echo "$RANDOM_NUMBER" > log.txt
+        echo "$data, $RANDOM_NUMBER" >> log.txt
 
     - name: Debug log.txt
       run: cat log.txt
@@ -32,7 +30,7 @@ jobs:
         git config --global user.email "gautamseyal2020@gmail.com"
 
         git add log.txt
-        git commit -m "Added" || echo "No changes to commit"
+        git commit -m "Added"
 
         git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
-        git push origin HEAD
+        git push origin main
