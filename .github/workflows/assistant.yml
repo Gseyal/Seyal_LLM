@@ -17,7 +17,7 @@ jobs:
 
     - name: Generate random number and save to file
       run: |
-        echo $date $RANDOM >> log.txt
+        echo $DATE >> log.txt
 
     - name: Debug log.txt
       run: cat log.txt
