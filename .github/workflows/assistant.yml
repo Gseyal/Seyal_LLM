@@ -27,7 +27,7 @@ jobs:
         git config --global user.email "gautamseyal2020@gmail.com"
 
         git add log.txt
-        git commit -m "Add random number: $(cat random_number.txt)" || echo "Nothing to commit"
+        git commit -m "Added"
 
         # Authenticate using fine-grained PAT
         git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
