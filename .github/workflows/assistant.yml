@@ -1,0 +1,29 @@
+name: Generate Random Number and Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch: 
+
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: log and save to file
+      run: |
+    
+        echo '$Date $RANDOM' > log.txt
+        
+    - name: Commit and push to the repository
+      run: |
+        git config --global user.name "Gseyal"
+        git config --global user.email "gautamseyal2020@gmail.com"
+        
+        git add log.txt
+        git commit -m "Add random number: $RANDOM_NUMBER"
+        git push origin main
+
