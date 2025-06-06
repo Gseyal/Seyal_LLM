@@ -3,7 +3,7 @@ name: Repo Assistant
 on:
   workflow_dispatch: # Manual run
   schedule:
-    - cron: '0 * * * *' # Every 10 minutes
+    - cron: '0 9-5 * * *' # Every 10 minutes
 
 jobs:
   generate-and-commit:
