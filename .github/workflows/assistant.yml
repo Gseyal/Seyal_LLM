@@ -1,35 +1,27 @@
-name: Repo Assistant
+name: Daily Commit
 
 on:
-  workflow_dispatch: # Manual run
   schedule:
-    - cron: '0 9-5 * * *' # Every 10 minutes
+    - cron: '15 4 * * *'
+  workflow_dispatch:
 
 jobs:
-  generate-and-commit:
+  commit:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Generate random number and save to file
-      run: echo "$(date) and $RANDOM" >> log.txt
+      - name: Commit step - [YOUR-EMAIL-HERE]
+        run: |
+          echo "TDSFU Daily run: $(date -u) TDSFU" >> daily-log.txt
 
-    - name: Debug log.txt
-      run: cat log.txt
-
-    - name: Commit and push the file
-      env:
-        TOKEN: ${{ secrets.CHABI }}
-      run: |
-        git config --global user.name "Gseyal"
-        git config --global user.email "gautamseyal2020@gmail.com"
-
-        git add log.txt
-        git commit -m "Added"
-
-        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Gseyal/Seyal_LLM.git
-        git push origin main
+      - name: Git Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add daily-log.txt
+          git commit -m "Auto commit at $(date -u)" || echo "No changes to commit"
+          git push
